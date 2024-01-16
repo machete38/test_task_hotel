@@ -37,6 +37,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   retrofit: '>=4.0.0 <5.0.0'
   json_annotation: ^4.8.1
+  mask_text_input_formatter: ^2.8.0
   dio: ^5.4.0
 
 dev_dependencies:

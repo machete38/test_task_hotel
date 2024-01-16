@@ -65,6 +65,7 @@ class _HomePageState extends State<HomePage> {
       roundedContainer(false, [
         imgStack((int page) {
           setState(() {
+            posts = posts;
             currentIndex = page;
           });
         }, currentIndex, posts.image_urls),

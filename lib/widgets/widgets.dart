@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:test_hotel/models/booking_model.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 enum TextType { black500, grey400, blue500, black400 }
 
@@ -168,16 +169,26 @@ class _touristWidgetState extends State<touristWidget> {
   }
 }
 
-Widget customTextField(hint, {isPhoneNum = false}) {
+Widget customTextField(hint,
+    {isPhoneNum = false, stateChangerTrue, stateChangerFalse}) {
+  var controller = TextEditingController();
+  var maskFormatter = new MaskTextInputFormatter(
+      mask: '(###) ###-##-##',
+      filter: {"#": RegExp(r'[0-9]')},
+      type: MaskAutoCompletionType.eager);
   return Container(
       margin: EdgeInsets.symmetric(vertical: 5),
       padding: EdgeInsets.symmetric(horizontal: 10),
       decoration: BoxDecoration(
           color: Color(0xFFF6F6F9), borderRadius: BorderRadius.circular(15)),
       child: TextFormField(
+        controller: isPhoneNum ? controller : null,
+        inputFormatters: isPhoneNum ? [maskFormatter] : null,
         keyboardType: isPhoneNum ? TextInputType.number : TextInputType.text,
         decoration: InputDecoration(
           labelText: hint,
+          hintText: isPhoneNum ? "(***) ***-**-**" : null,
+          prefixText: isPhoneNum ? "+7 " : null,
           labelStyle: TextStyle(color: Color(0xFFA9ABB7), fontSize: 17),
           border: InputBorder.none,
         ),
@@ -191,7 +202,7 @@ Widget userInfoW() {
       Container(
           margin: EdgeInsets.symmetric(vertical: 5),
           child: customText("Информация о покупателе", TextType.black500, 22)),
-      customTextField("Номер телефона"),
+      customTextField("Номер телефона", isPhoneNum: true),
       customTextField("Почта"),
       customText(
           "Эти данные никому не передаются. После оплаты мы вышлем чек на указанный вами номер и почту",
